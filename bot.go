@@ -28,8 +28,13 @@ func main() {
 	for update := range updates {
 		if update.Message == nil { continue } // if it not a massage ignore (maybe user input in group)
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text); // logging anything in console
-	
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID,  update.Message.Text); // ID - КОМУ ОТПРАВЛЯТЬ TEXT - ЧТО ОТПРАВИТЬ
+		
+		if update.Message.Text == "/any" {
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hello user!");
+			msg.ReplyToMessageID = update.Message.MessageID;
+		}
+
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hi!"); // ID - КОМУ ОТПРАВЛЯТЬ TEXT - ЧТО ОТПРАВИТЬ
 		msg.ReplyToMessageID = update.Message.MessageID; // rEPLY MESSAGE 
 
 
